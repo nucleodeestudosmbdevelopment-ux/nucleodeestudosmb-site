@@ -30,58 +30,66 @@ copyDirRecursive(resolve(root, "dist", "client"), staticDir);
 // Copy server assets into the function
 copyDirRecursive(resolve(root, "dist", "server"), funcDir);
 
-// Create the function entry point — Node.js HTTP handler wrapping the fetch server
+// Create the function entry point — CommonJS handler wrapping the ESM fetch server
 writeFileSync(
-  resolve(funcDir, "entry.js"),
+  resolve(funcDir, "entry.cjs"),
   `
-import server from "./server.js";
-
-export default async function handler(req, res) {
-  const proto = (req.headers["x-forwarded-proto"] || "https").split(",")[0].trim();
-  const host = req.headers["x-forwarded-host"] || req.headers.host;
-  const url = new URL(req.url, proto + "://" + host);
-
-  const headers = new Headers();
-  for (const [key, value] of Object.entries(req.headers)) {
-    if (value == null) continue;
-    if (Array.isArray(value)) {
-      for (const v of value) headers.append(key, v);
-    } else {
-      headers.set(key, value);
-    }
+"use strict";
+let _serverPromise;
+function getServer() {
+  if (!_serverPromise) {
+    _serverPromise = import("./server.js").then((m) => m.default);
   }
-
-  let body = null;
-  if (!["GET", "HEAD"].includes(req.method ?? "GET")) {
-    const chunks = [];
-    for await (const chunk of req) chunks.push(chunk);
-    body = Buffer.concat(chunks);
-  }
-
-  const request = new Request(url.toString(), { method: req.method, headers, body });
-  const response = await server.fetch(request, {}, {});
-
-  res.statusCode = response.status;
-  for (const [key, value] of response.headers.entries()) {
-    res.setHeader(key, value);
-  }
-
-  const buffer = Buffer.from(await response.arrayBuffer());
-  res.end(buffer);
+  return _serverPromise;
 }
+
+module.exports = async function handler(req, res) {
+  try {
+    const server = await getServer();
+    const proto = ((req.headers["x-forwarded-proto"] || "https") + "").split(",")[0].trim();
+    const host = req.headers["x-forwarded-host"] || req.headers.host;
+    const url = new URL(req.url, proto + "://" + host);
+
+    const headers = new Headers();
+    for (const [key, value] of Object.entries(req.headers)) {
+      if (value == null) continue;
+      if (Array.isArray(value)) {
+        for (const v of value) headers.append(key, v);
+      } else {
+        headers.set(key, String(value));
+      }
+    }
+
+    let body = null;
+    if (!["GET", "HEAD"].includes((req.method || "GET").toUpperCase())) {
+      const chunks = [];
+      for await (const chunk of req) chunks.push(chunk);
+      body = Buffer.concat(chunks);
+    }
+
+    const request = new Request(url.toString(), { method: req.method, headers, body });
+    const response = await server.fetch(request, {}, {});
+
+    res.statusCode = response.status;
+    for (const [key, value] of response.headers.entries()) {
+      res.setHeader(key, value);
+    }
+
+    const buffer = Buffer.from(await response.arrayBuffer());
+    res.end(buffer);
+  } catch (err) {
+    console.error("[entry.cjs] unhandled error:", err);
+    res.statusCode = 500;
+    res.end("Internal Server Error");
+  }
+};
 `.trimStart()
 );
 
-// Function config
+// Function config — CJS entry wrapping the ESM server
 writeFileSync(
   resolve(funcDir, ".vc-config.json"),
-  JSON.stringify({ runtime: "nodejs22.x", handler: "entry.js", launcherType: "Nodejs" }, null, 2)
-);
-
-// Mark function dir as ESM so Node.js treats .js files as ES modules
-writeFileSync(
-  resolve(funcDir, "package.json"),
-  JSON.stringify({ type: "module" }, null, 2)
+  JSON.stringify({ runtime: "nodejs22.x", handler: "entry.cjs", launcherType: "Nodejs" }, null, 2)
 );
 
 // Vercel output config — serve static files first, fallback to SSR function
