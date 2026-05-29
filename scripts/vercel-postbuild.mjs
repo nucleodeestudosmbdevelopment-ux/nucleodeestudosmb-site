@@ -78,6 +78,12 @@ writeFileSync(
   JSON.stringify({ runtime: "nodejs22.x", handler: "entry.js", launcherType: "Nodejs" }, null, 2)
 );
 
+// Mark function dir as ESM so Node.js treats .js files as ES modules
+writeFileSync(
+  resolve(funcDir, "package.json"),
+  JSON.stringify({ type: "module" }, null, 2)
+);
+
 // Vercel output config — serve static files first, fallback to SSR function
 writeFileSync(
   resolve(vercelOutput, "config.json"),
