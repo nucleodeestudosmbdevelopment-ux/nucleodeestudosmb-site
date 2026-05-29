@@ -144,7 +144,7 @@ export function Hero3D() {
     window.addEventListener("touchstart", startIntro, passive);
     window.addEventListener("scroll", startIntro, passive);
     window.addEventListener("keydown", onKeyDown);
-    fallbackTimer = setTimeout(startIntro, 850);
+    fallbackTimer = setTimeout(startIntro, 2000);
 
     return () => {
       clearTimeout(timer);
