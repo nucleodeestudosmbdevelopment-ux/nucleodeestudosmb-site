@@ -247,7 +247,7 @@ export function Hero3D() {
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(180deg, oklch(0.2 0.025 250) 0%, oklch(0.16 0.03 250) 42%, oklch(0.14 0.028 250) 100%), radial-gradient(circle at 50% 42%, oklch(0.74 0.18 152 / 0.34) 0%, transparent 26%), radial-gradient(circle at 24% 20%, oklch(0.82 0.1 152 / 0.16) 0%, transparent 28%), radial-gradient(circle at 78% 18%, oklch(0.72 0.14 295 / 0.12) 0%, transparent 26%)",
+              "radial-gradient(ellipse at 15% 25%, oklch(0.74 0.22 152 / 0.18) 0%, transparent 45%), radial-gradient(ellipse at 85% 15%, oklch(0.65 0.26 295 / 0.16) 0%, transparent 42%), radial-gradient(ellipse at 50% 90%, oklch(0.70 0.20 152 / 0.10) 0%, transparent 40%), linear-gradient(135deg, oklch(0.18 0.06 280) 0%, oklch(0.13 0.03 250) 50%, oklch(0.15 0.05 200) 100%)",
             opacity: overlayFading ? 0 : 1,
             transition: "opacity 1.35s cubic-bezier(0.16, 1, 0.3, 1)",
           }}
