@@ -71,9 +71,38 @@ export const pillars = [
 ] as const;
 
 export const testimonials = [
-  { text: "Percebemos uma mudança na organização e na confiança durante os estudos.", author: "Responsável" },
-  { text: "Meu filho passou a estudar com mais autonomia e clareza.", author: "Família" },
-  { text: "O acompanhamento ajudou a criar uma rotina mais leve e eficiente.", author: "Aluno" },
+  {
+    text: "Meu neto possui vários transtornos: TDAH, TOD e Asperger. Após iniciar no Núcleo Márcia Baldi, seus problemas amenizaram de forma surpreendente, passou a sentir prazer de estudar, suas notas melhoraram e até o comportamento — porque lá não é só aprender conteúdos, o acolhimento é surreal!",
+    author: "Responsável",
+  },
+  {
+    text: "Seremos eternamente gratas ao Núcleo. Foi de extrema importância para a conquista da minha filha nos vestibulares de medicina que prestou, sendo aprovada em todos.",
+    author: "Responsável",
+  },
+  {
+    text: "Professores super pacientes, explicam com calma e se importam com o aluno. O ambiente é leve, fazendo a gente se sentir à vontade para aprender sem pressão.",
+    author: "Aluno",
+  },
+  {
+    text: "Um ambiente super acolhedor, aulas totalmente personalizadas para o nosso aprendizado! A Márcia é sensacional. Indico de olhos fechados!",
+    author: "Aluno",
+  },
+  {
+    text: "Minha filha tinha muita dificuldade em interpretação de texto e língua portuguesa. Em apenas dois meses no Núcleo Márcia Baldi, ela superou esses desafios e suas notas em todas as matérias melhoraram.",
+    author: "Responsável",
+  },
+  {
+    text: "Lugar de estudar e ser feliz ao mesmo tempo! Ainda mais em um espaço tão aconchegante, com uma professora — na verdade, uma equipe — tão cuidadosa no preparo de suas aulas.",
+    author: "Responsável",
+  },
+  {
+    text: "A melhor experiência possível! Me sinto em casa, em um ambiente extremamente agradável e acolhedor, com pessoas especiais. A Márcia é uma profissional diferenciada.",
+    author: "Aluno",
+  },
+  {
+    text: "Comecei a estudar no núcleo em 2023. É um dos melhores ensinos que já recebi — muito acolhedores e didáticos.",
+    author: "Aluno",
+  },
 ];
 
 export const floatingWords = ["clareza", "confiança", "argumentação", "autonomia", "expressão", "organização"];
