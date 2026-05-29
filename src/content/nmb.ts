@@ -11,13 +11,75 @@ export const contact = {
   hours: import.meta.env.VITE_CONTACT_HOURS as string,
 };
 
+export const navigationLinks = [
+  { href: "#sobre", label: "Sobre" },
+  { href: "#marcia", label: "Márcia Baldi" },
+  { href: "#nucleo", label: "O Núcleo" },
+  { href: "#comunicacao", label: "Comunicação" },
+  { href: "#prevestibular", label: "Medicina" },
+  { href: "#contato", label: "Contato" },
+] as const;
+
 export const aboutCards = [
-  { title: "Aprendizagem com propósito", desc: "Estudo direcionado ao desenvolvimento real do aluno." },
-  { title: "Acompanhamento próximo", desc: "Um olhar atento à rotina, ao ritmo e às necessidades." },
+  {
+    title: "Aprendizagem com propósito",
+    desc: "Estudo direcionado ao desenvolvimento real do aluno.",
+  },
+  {
+    title: "Acompanhamento próximo",
+    desc: "Um olhar atento à rotina, ao ritmo e às necessidades.",
+  },
   { title: "Desenvolvimento de autonomia", desc: "O aluno aprende a estudar com mais constância." },
   { title: "Comunicação clara", desc: "Argumentação, escrita e expressão como parte da formação." },
-  { title: "Evolução acadêmica", desc: "Progresso percebido nos estudos, na rotina e na confiança." },
+  {
+    title: "Evolução acadêmica",
+    desc: "Progresso percebido nos estudos, na rotina e na confiança.",
+  },
 ];
+
+export const marciaProfile = {
+  image: "/people/marcia-baldi.jpeg",
+  imageAlt: "Retrato de Márcia Baldi, fundadora do Núcleo Márcia Baldi.",
+  badge: "Quem é Márcia Baldi",
+  title: "A educadora que dá nome, direção e presença ao núcleo.",
+  description: [
+    "À frente do Núcleo Márcia Baldi, ela conduz uma proposta pedagógica que une linguagem, organização dos estudos, desenvolvimento acadêmico e acompanhamento próximo de cada aluno.",
+    "Sua trajetória combina base acadêmica sólida e olhar atento ao processo de aprendizagem, sustentando um trabalho que valoriza tanto o desempenho quanto a construção de autonomia, clareza e confiança.",
+  ],
+} as const;
+
+export const marciaCredentials = [
+  {
+    label: "Graduação",
+    value: "Letras",
+    desc: "Formação de base voltada ao estudo da linguagem, da leitura e da escrita.",
+  },
+  {
+    label: "Mestrado e Doutorado",
+    value: "Análise Discursiva",
+    desc: "Formação desenvolvida na UFJF e na UFMG, com aprofundamento em linguagem e discurso.",
+  },
+  {
+    label: "Especialização",
+    value: "Psicopedagogia e Neuropsicologia",
+    desc: "Especialização pela UFBA, ampliando o olhar sobre aprendizagem e desenvolvimento.",
+  },
+] as const;
+
+export const marciaHighlights = [
+  {
+    title: "Fundadora do Núcleo",
+    desc: "A presença da Márcia está na visão pedagógica, no cuidado com a jornada e na identidade do espaço.",
+  },
+  {
+    title: "Formação interdisciplinar",
+    desc: "Linguagem, discurso, psicopedagogia e neuropsicologia sustentam um trabalho mais completo.",
+  },
+  {
+    title: "Acompanhamento com método",
+    desc: "Cada aluno é observado com proximidade para evoluir com clareza, constância e autonomia.",
+  },
+] as const;
 
 export const pillars = [
   {
@@ -105,7 +167,14 @@ export const testimonials = [
   },
 ];
 
-export const floatingWords = ["clareza", "confiança", "argumentação", "autonomia", "expressão", "organização"];
+export const floatingWords = [
+  "clareza",
+  "confiança",
+  "argumentação",
+  "autonomia",
+  "expressão",
+  "organização",
+];
 
 export const environmentGallery = [
   {
@@ -129,8 +198,24 @@ export const preVestibularHighlight = {
 };
 
 export const preVestibularFeatures = [
-  { icon: "✦", label: "Redação dissertativa", desc: "Domínio de tese, argumentação e repertório para ENEM e vestibulares." },
-  { icon: "◐", label: "Interpretação de texto", desc: "Leitura crítica e resolução de questões de alto nível de exigência." },
-  { icon: "↗", label: "Rotina e método", desc: "Planejamento individualizado para manter constância e evolução real." },
-  { icon: "✷", label: "Aprovações em Medicina", desc: "Histórico de alunos aprovados em cursos de alta concorrência em BH." },
+  {
+    icon: "✦",
+    label: "Redação dissertativa",
+    desc: "Domínio de tese, argumentação e repertório para ENEM e vestibulares.",
+  },
+  {
+    icon: "◐",
+    label: "Interpretação de texto",
+    desc: "Leitura crítica e resolução de questões de alto nível de exigência.",
+  },
+  {
+    icon: "↗",
+    label: "Rotina e método",
+    desc: "Planejamento individualizado para manter constância e evolução real.",
+  },
+  {
+    icon: "✷",
+    label: "Aprovações em Medicina",
+    desc: "Histórico de alunos aprovados em cursos de alta concorrência em BH.",
+  },
 ];

@@ -1,18 +1,19 @@
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { Menu } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { contact } from "@/content/nmb";
+import { contact, navigationLinks } from "@/content/nmb";
 import { BRAND_LOGO_ICON_URL } from "@/lib/brand";
 
-const SCROLL_START_KEYS = new Set(["ArrowDown", "ArrowUp", "PageDown", "PageUp", "Home", "End", " ", "Spacebar"]);
-
-const HERO_HEADER_LINKS = [
-  { href: "#sobre", label: "Sobre" },
-  { href: "#nucleo", label: "O Núcleo" },
-  { href: "#jornada", label: "Jornada" },
-  { href: "#professores", label: "Professores" },
-  { href: "#contato", label: "Contato" },
-];
+const SCROLL_START_KEYS = new Set([
+  "ArrowDown",
+  "ArrowUp",
+  "PageDown",
+  "PageUp",
+  "Home",
+  "End",
+  " ",
+  "Spacebar",
+]);
 
 function TrajectoryLines() {
   const paths = [
@@ -20,6 +21,7 @@ function TrajectoryLines() {
     "M -60 520 C 200 468, 390 380, 700 328 C 920 292, 1130 238, 1460 176",
     "M 120 600 C 350 520, 560 430, 860 390 C 1060 360, 1240 310, 1460 250",
   ];
+
   return (
     <svg
       className="absolute inset-0 h-full w-full opacity-35 pointer-events-none"
@@ -80,7 +82,9 @@ export function Hero3D() {
   const ty = useTransform(sy, (v) => v * 8);
 
   useEffect(() => {
-    const nav = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming | undefined;
+    const nav = performance.getEntriesByType("navigation")[0] as
+      | PerformanceNavigationTiming
+      | undefined;
     if (nav?.type === "reload") {
       window.scrollTo({ top: 0, left: 0, behavior: "auto" });
       setStarted(false);
@@ -107,12 +111,15 @@ export function Hero3D() {
       my.set(y);
       updateSpotlight(e.clientX, e.clientY);
     };
+
     const onTouch = (e: TouchEvent) => {
-      const t = e.touches[0];
-      if (t) updateSpotlight(t.clientX, t.clientY);
+      const touch = e.touches[0];
+      if (touch) updateSpotlight(touch.clientX, touch.clientY);
     };
+
     window.addEventListener("mousemove", onMove);
     window.addEventListener("touchmove", onTouch, { passive: true });
+
     return () => {
       window.removeEventListener("mousemove", onMove);
       window.removeEventListener("touchmove", onTouch);
@@ -145,9 +152,13 @@ export function Hero3D() {
     document.body.style.overflow = "hidden";
 
     const handleStartIntro = (event?: Event) => {
-      if (event?.target instanceof Element && event.target.closest("[data-curtain-menu-interactive]")) {
+      if (
+        event?.target instanceof Element &&
+        event.target.closest("[data-curtain-menu-interactive]")
+      ) {
         return;
       }
+
       startIntro();
     };
 
@@ -177,9 +188,11 @@ export function Hero3D() {
     <section
       id="top"
       className="relative min-h-[100svh] overflow-hidden"
-      style={{ background: "linear-gradient(180deg, oklch(0.985 0.008 95) 0%, oklch(0.978 0.012 95) 58%, oklch(0.955 0.03 295 / 0.22) 100%)" }}
+      style={{
+        background:
+          "linear-gradient(180deg, oklch(0.985 0.008 95) 0%, oklch(0.978 0.012 95) 58%, oklch(0.955 0.03 295 / 0.22) 100%)",
+      }}
     >
-      {/* ─── Hero reveal sob a cortina ─── */}
       <motion.div
         className="absolute inset-0"
         style={{ zIndex: 10 }}
@@ -187,36 +200,35 @@ export function Hero3D() {
         animate={{ opacity: started ? 1 : 0.94, scale: started ? 1 : 1.025 }}
         transition={{ duration: 0.72, ease: [0.16, 1, 0.3, 1] }}
       >
-        {/* Layer 0: atmospheric backdrop */}
         <OrganicBackdrop />
 
-        {/* Layer 1: cursor spotlight */}
         <div
           ref={spotlightRef}
           className="absolute inset-0 pointer-events-none"
-          style={{
-            zIndex: 1,
-            background: "radial-gradient(circle 420px at var(--spot-x, 50%) var(--spot-y, 50%), oklch(1 0 0 / 0.28) 0%, transparent 68%)",
-          } as React.CSSProperties}
+          style={
+            {
+              zIndex: 1,
+              background:
+                "radial-gradient(circle 420px at var(--spot-x, 50%) var(--spot-y, 50%), oklch(1 0 0 / 0.28) 0%, transparent 68%)",
+            } as React.CSSProperties
+          }
         />
 
-        {/* Layer 2: trajectory lines */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 2 }}>
           <TrajectoryLines />
         </div>
 
-        {/* Layer 3: edge vignette */}
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
             zIndex: 3,
-            background: "linear-gradient(180deg, oklch(1 0 0 / 0.14) 0%, transparent 16%, transparent 82%, oklch(0.95 0.02 250 / 0.18) 100%)",
+            background:
+              "linear-gradient(180deg, oklch(1 0 0 / 0.14) 0%, transparent 16%, transparent 82%, oklch(0.95 0.02 250 / 0.18) 100%)",
           }}
         />
 
-        {/* Layer 10: text content */}
         <div
-          className="relative mx-auto max-w-6xl px-6 pt-32 pb-16 sm:pt-40 sm:pb-24 md:pt-48 md:pb-32"
+          className="relative mx-auto max-w-6xl px-6 pb-16 pt-32 sm:pb-24 sm:pt-40 md:pb-32 md:pt-48"
           style={{ zIndex: 10 }}
         >
           <motion.div
@@ -230,28 +242,35 @@ export function Hero3D() {
               <span aria-hidden className="h-2 w-2 rotate-45 bg-brand-green" />
               Núcleo de Ensino
             </div>
-            <h1 className="mt-6 text-balance text-[clamp(2rem,8.2vw,2.85rem)] sm:text-4xl md:text-6xl lg:text-7xl font-medium leading-[1.14] sm:leading-[1.12] md:leading-[1.08] text-foreground">
+            <h1 className="mt-6 text-balance text-[clamp(2rem,8.2vw,2.85rem)] font-medium leading-[1.14] text-foreground sm:text-4xl sm:leading-[1.12] md:text-6xl md:leading-[1.08] lg:text-7xl">
               Educação, comunicação <br className="hidden sm:block" /> e{" "}
-              <span className="font-display text-brand-green sm:inline-block">autonomia</span> para alunos que{" "}
-              <span className="font-display text-brand-purple sm:inline-block">querem ir mais longe</span>.
+              <span className="font-display text-brand-green sm:inline-block">autonomia</span> para
+              alunos que{" "}
+              <span className="font-display text-brand-purple sm:inline-block">
+                querem ir mais longe
+              </span>
+              .
             </h1>
-            <p className="mx-auto mt-5 max-w-2xl text-pretty text-base sm:text-lg text-ink-muted/90">
-              Um núcleo de ensino com foco em pré-vestibular e redação — com aprovações em Medicina e
-              vestibulares concorridos — para quem busca acompanhamento próximo, método e resultado real.
+            <p className="mx-auto mt-5 max-w-2xl text-pretty text-base text-ink-muted/90 sm:text-lg">
+              Um núcleo de ensino com foco em pré-vestibular e redação, com aprovações em Medicina e
+              vestibulares concorridos, para quem busca acompanhamento próximo, método e resultado
+              real.
             </p>
             <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
               <a
                 href={contact.whatsapp}
                 target="_blank"
                 rel="noreferrer"
-                className="group inline-flex items-center gap-2 rounded-full bg-foreground text-background px-7 py-4 text-sm font-medium hover:translate-y-[-2px] transition-transform shadow-3d"
+                className="group inline-flex items-center gap-2 rounded-full bg-foreground px-7 py-4 text-sm font-medium text-background transition-transform hover:-translate-y-[-2px] shadow-3d"
               >
                 Falar pelo WhatsApp
-                <span aria-hidden className="transition-transform group-hover:translate-x-1">→</span>
+                <span aria-hidden className="transition-transform group-hover:translate-x-1">
+                  →
+                </span>
               </a>
               <a
                 href="#sobre"
-                className="inline-flex items-center gap-2 rounded-full border border-border bg-surface-elevated px-7 py-4 text-sm font-medium text-foreground hover:bg-muted transition-colors"
+                className="inline-flex items-center gap-2 rounded-full border border-border bg-surface-elevated px-7 py-4 text-sm font-medium text-foreground transition-colors hover:bg-muted"
               >
                 Conhecer o Núcleo
               </a>
@@ -260,7 +279,6 @@ export function Hero3D() {
         </div>
       </motion.div>
 
-      {/* ─── Cortina: foto de aula sólida + brand mark ─── */}
       <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 70 }}>
         <div
           className="absolute inset-0"
@@ -271,14 +289,14 @@ export function Hero3D() {
             transition: "opacity 0.64s cubic-bezier(0.16, 1, 0.3, 1)",
           }}
         />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_46%,rgba(255,255,255,0.08)_0%,transparent_24%),linear-gradient(180deg,rgba(255,255,255,0.04)_0%,transparent_18%,transparent_82%,rgba(0,0,0,0.24)_100%)]"
+        <div
+          className="absolute inset-0 bg-[radial-gradient(circle_at_50%_46%,rgba(255,255,255,0.08)_0%,transparent_24%),linear-gradient(180deg,rgba(255,255,255,0.04)_0%,transparent_18%,transparent_82%,rgba(0,0,0,0.24)_100%)]"
           style={{
             opacity: overlayFading ? 0 : 1,
             transition: "opacity 0.64s cubic-bezier(0.16, 1, 0.3, 1)",
           }}
         />
 
-        {/* Brand mark + indicador de scroll */}
         <motion.div
           className="absolute inset-0 flex flex-col items-center justify-center"
           initial={{ opacity: 1 }}
@@ -286,7 +304,10 @@ export function Hero3D() {
           transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
           style={{ zIndex: 80 }}
         >
-          <div className="pointer-events-auto absolute inset-x-0 top-0 px-4 pt-4" data-curtain-menu-interactive>
+          <div
+            className="pointer-events-auto absolute inset-x-0 top-0 px-4 pt-4"
+            data-curtain-menu-interactive
+          >
             <div className="mx-auto flex max-w-7xl items-center gap-3">
               <a
                 href="#top"
@@ -298,7 +319,9 @@ export function Hero3D() {
                   className="h-10 w-10 shrink-0 rounded-[0.9rem] object-contain shadow-[0_10px_20px_-12px_rgba(0,0,0,0.45)]"
                 />
                 <span className="hidden sm:flex flex-col leading-tight">
-                  <span className="text-[10px] uppercase tracking-[0.24em] text-white/50">Núcleo</span>
+                  <span className="text-[10px] uppercase tracking-[0.24em] text-white/50">
+                    Núcleo
+                  </span>
                   <span className="text-sm font-semibold text-white/92">Márcia Baldi</span>
                 </span>
               </a>
@@ -306,7 +329,7 @@ export function Hero3D() {
               <div className="hidden flex-1 justify-center md:flex">
                 <div className="relative flex items-center rounded-full border border-white/14 bg-white/[0.07] px-2 py-2 backdrop-blur-xl shadow-[0_16px_44px_-28px_rgba(0,0,0,0.58)]">
                   <nav className="relative z-10 flex items-center gap-1 text-sm text-white/80">
-                    {HERO_HEADER_LINKS.map((link) => (
+                    {navigationLinks.map((link) => (
                       <a
                         key={link.href}
                         href={link.href}
@@ -345,6 +368,7 @@ export function Hero3D() {
               </a>
             </div>
           </div>
+
           <div className="flex flex-col items-center gap-5 text-center">
             <img
               src={BRAND_LOGO_ICON_URL}
@@ -360,16 +384,21 @@ export function Hero3D() {
               </p>
             </div>
           </div>
+
           <motion.div
             animate={overlayFading ? {} : { opacity: [0.5, 1, 0.5] }}
             transition={overlayFading ? {} : { duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute bottom-10 left-1/2 w-[min(90vw,20rem)] -translate-x-1/2 flex flex-col items-center gap-2 px-4 text-center"
+            className="absolute bottom-10 left-1/2 flex w-[min(90vw,20rem)] -translate-x-1/2 flex-col items-center gap-2 px-4 text-center"
           >
-            <span className="block text-[10px] uppercase tracking-[0.3em] text-white/50">role ou aguarde para começar</span>
+            <span className="block text-[10px] uppercase tracking-[0.3em] text-white/50">
+              role ou aguarde para começar
+            </span>
             <motion.span
               animate={overlayFading ? {} : { y: [0, 7, 0] }}
-              transition={overlayFading ? {} : { duration: 1.7, repeat: Infinity, ease: "easeInOut" }}
-              className="text-white/40 text-lg"
+              transition={
+                overlayFading ? {} : { duration: 1.7, repeat: Infinity, ease: "easeInOut" }
+              }
+              className="text-lg text-white/40"
               aria-hidden
             >
               ↓
@@ -378,7 +407,6 @@ export function Hero3D() {
         </motion.div>
       </div>
 
-      {/* ─── Scrim de topo: garante contraste do header sobre qualquer fundo ─── */}
       <div
         className="absolute inset-x-0 top-0 pointer-events-none"
         style={{

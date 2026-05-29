@@ -48,7 +48,7 @@ export function AboutSection() {
               key={c.title}
               initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: false }} transition={{ duration: 0.5, delay: i * 0.08 }}
-              className="group relative rounded-3xl border border-border bg-surface-elevated p-6 shadow-card hover:-translate-y-1 hover:shadow-3d transition-all"
+              className="group relative rounded-3xl border border-border bg-muted p-6 shadow-card hover:-translate-y-1 hover:shadow-3d transition-all"
             >
               <div className="text-2xl text-brand-green group-hover:text-brand-purple transition-colors">
                 {icons[c.title] ?? "✦"}

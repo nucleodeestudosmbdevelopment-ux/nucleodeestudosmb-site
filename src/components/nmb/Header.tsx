@@ -2,16 +2,8 @@ import { useEffect, useState, type MouseEvent } from "react";
 import { createPortal } from "react-dom";
 import { motion } from "framer-motion";
 import { Menu } from "lucide-react";
-import { contact } from "@/content/nmb";
+import { contact, navigationLinks } from "@/content/nmb";
 import { BRAND_LOGO_ICON_URL } from "@/lib/brand";
-
-const links = [
-  { href: "#sobre", label: "Sobre" },
-  { href: "#nucleo", label: "O Núcleo" },
-  { href: "#jornada", label: "Jornada" },
-  { href: "#professores", label: "Professores" },
-  { href: "#contato", label: "Contato" },
-];
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -52,9 +44,7 @@ export function Header() {
         <a
           href="#top"
           className={`flex shrink-0 items-center gap-3 rounded-full border px-3.5 py-2.5 backdrop-blur-xl transition-all duration-500 ${
-            scrolled
-              ? "border-black/6 bg-white/90 shadow-card"
-              : "border-white/40 bg-white/55"
+            scrolled ? "border-black/6 bg-white/90 shadow-card" : "border-white/40 bg-white/55"
           }`}
         >
           <img
@@ -63,7 +53,9 @@ export function Header() {
             className="h-10 w-10 shrink-0 rounded-[0.9rem] object-contain shadow-[0_10px_20px_-12px_rgba(0,0,0,0.45)]"
           />
           <span className="hidden sm:flex flex-col leading-tight">
-            <span className="text-[10px] uppercase tracking-[0.24em] text-ink-muted/70">Núcleo</span>
+            <span className="text-[10px] uppercase tracking-[0.24em] text-ink-muted/70">
+              Núcleo
+            </span>
             <span className="text-sm font-semibold text-foreground">Márcia Baldi</span>
           </span>
         </a>
@@ -71,19 +63,17 @@ export function Header() {
         <div className="hidden flex-1 justify-center md:flex">
           <div
             className={`relative flex items-center rounded-full border px-2 py-2 backdrop-blur-xl transition-all duration-500 ${
-              scrolled
-                ? "border-black/6 bg-white/88 shadow-card"
-                : "border-white/35 bg-white/45"
+              scrolled ? "border-black/6 bg-white/88 shadow-card" : "border-white/35 bg-white/45"
             }`}
           >
             <nav className="relative z-10 flex items-center gap-1 text-sm text-foreground/70">
-              {links.map((l) => (
+              {navigationLinks.map((link) => (
                 <a
-                  key={l.href}
-                  href={l.href}
+                  key={link.href}
+                  href={link.href}
                   className="rounded-full px-4 py-2 font-medium transition-all duration-200 hover:bg-black/5 hover:text-foreground"
                 >
-                  {l.label}
+                  {link.label}
                 </a>
               ))}
             </nav>
@@ -113,11 +103,11 @@ export function Header() {
                 type="button"
                 aria-label="Fechar menu"
                 onClick={() => setMenuOpen(false)}
-                className="fixed inset-0 z-[55] md:hidden"
+                className="fixed inset-0 z-[70] bg-black/40 backdrop-blur-[2px] md:hidden"
               />
-              <div className="fixed right-4 top-[5.25rem] z-[60] w-[min(88vw,21rem)] md:hidden">
+              <div className="fixed right-4 top-[5.25rem] z-[72] w-[min(88vw,21rem)] md:hidden">
                 <div className="flex flex-col items-end gap-2">
-                  {links.map((link) => (
+                  {navigationLinks.map((link) => (
                     <a
                       key={link.href}
                       href={link.href}
@@ -134,14 +124,13 @@ export function Header() {
                     onClick={() => setMenuOpen(false)}
                     className="inline-flex items-center gap-2 rounded-full bg-foreground px-4 py-2.5 font-semibold text-background shadow-soft"
                   >
-                    <span aria-hidden className="h-2.5 w-2.5 rotate-45 bg-brand-green" />
-                    {" "}
-                    Falar pelo WhatsApp
+                    <span aria-hidden className="h-2.5 w-2.5 rotate-45 bg-brand-green" /> Falar pelo
+                    WhatsApp
                   </a>
                 </div>
               </div>
             </>,
-            document.body
+            document.body,
           )}
 
         <a
@@ -150,9 +139,7 @@ export function Header() {
           rel="noreferrer"
           className="hidden shrink-0 items-center gap-2 rounded-full bg-foreground px-5 py-2.5 text-sm font-semibold text-background shadow-soft transition-all duration-300 hover:-translate-y-0.5 md:inline-flex"
         >
-          <span aria-hidden className="h-2 w-2 rotate-45 bg-brand-green" />
-          {" "}
-          WhatsApp
+          <span aria-hidden className="h-2 w-2 rotate-45 bg-brand-green" /> WhatsApp
         </a>
       </div>
     </motion.header>

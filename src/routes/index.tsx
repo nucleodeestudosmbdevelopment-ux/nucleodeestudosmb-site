@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Header } from "@/components/nmb/Header";
 import { Hero3D } from "@/components/nmb/Hero3D";
 import { AboutSection } from "@/components/nmb/AboutSection";
+import { MarciaSection } from "@/components/nmb/MarciaSection";
 import { InsideNucleusSection } from "@/components/nmb/InsideNucleusSection";
 import { LearningEnvironmentSection } from "@/components/nmb/LearningEnvironmentSection";
 import { CommunicationSection } from "@/components/nmb/CommunicationSection";
@@ -22,8 +23,7 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: "Núcleo Márcia Baldi" },
       {
         property: "og:description",
-        content:
-          "Educação, comunicação e autonomia para alunos que querem ir mais longe.",
+        content: "Educação, comunicação e autonomia para alunos que querem ir mais longe.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -39,6 +39,7 @@ function Index() {
       <Header />
       <Hero3D />
       <AboutSection />
+      <MarciaSection />
       <InsideNucleusSection />
       <LearningEnvironmentSection />
       <CommunicationSection />
