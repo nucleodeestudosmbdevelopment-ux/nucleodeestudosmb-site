@@ -242,7 +242,7 @@ export function Hero3D() {
       </motion.div>
 
       {/* ─── Cortina: foto de aula sólida + brand mark ─── */}
-      <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 20 }}>
+      <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 70 }}>
         <div
           className="absolute inset-0"
           style={{
@@ -265,7 +265,7 @@ export function Hero3D() {
           initial={{ opacity: 1 }}
           animate={{ opacity: overlayFading ? 0 : 1 }}
           transition={{ duration: 1.05, ease: [0.16, 1, 0.3, 1] }}
-          style={{ zIndex: 30 }}
+          style={{ zIndex: 80 }}
         >
           <div className="pointer-events-auto absolute inset-x-0 top-0 px-4 pt-4">
             <div className="mx-auto flex max-w-7xl items-center gap-3">
