@@ -1,7 +1,18 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { Menu } from "lucide-react";
 import { contact } from "@/content/nmb";
 import { BRAND_LOGO_ICON_URL } from "@/lib/brand";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
 
 const links = [
   { href: "#sobre", label: "Sobre" },
@@ -13,6 +24,7 @@ const links = [
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -70,11 +82,60 @@ export function Header() {
           </div>
         </div>
 
+        <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
+          <SheetTrigger asChild>
+            <Button
+              variant="outline"
+              size="icon"
+              className={`ml-auto rounded-full border backdrop-blur-xl md:hidden ${
+                scrolled
+                  ? "border-black/8 bg-white/92 text-foreground shadow-card"
+                  : "border-white/35 bg-white/55 text-foreground"
+              }`}
+              aria-label="Abrir menu"
+            >
+              <Menu className="h-5 w-5" />
+            </Button>
+          </SheetTrigger>
+
+          <SheetContent side="right" className="w-[88vw] border-l border-black/8 bg-surface p-6">
+            <SheetHeader className="text-left">
+              <SheetTitle className="text-foreground">Núcleo Márcia Baldi</SheetTitle>
+              <SheetDescription>Navegue pelas seções e fale conosco no WhatsApp.</SheetDescription>
+            </SheetHeader>
+
+            <nav className="mt-8 flex flex-col gap-2">
+              {links.map((link) => (
+                <SheetClose asChild key={link.href}>
+                  <a
+                    href={link.href}
+                    className="rounded-xl border border-black/8 bg-white px-4 py-3 text-base font-medium text-foreground transition-colors hover:bg-muted"
+                  >
+                    {link.label}
+                  </a>
+                </SheetClose>
+              ))}
+            </nav>
+
+            <div className="mt-6">
+              <a
+                href={contact.whatsapp}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-foreground px-5 py-3.5 text-sm font-semibold text-background shadow-soft"
+              >
+                <span aria-hidden className="h-2.5 w-2.5 rotate-45 bg-brand-green" />
+                Falar pelo WhatsApp
+              </a>
+            </div>
+          </SheetContent>
+        </Sheet>
+
         <a
           href={contact.whatsapp}
           target="_blank"
           rel="noreferrer"
-          className="inline-flex shrink-0 items-center gap-2 rounded-full bg-foreground px-5 py-2.5 text-sm font-semibold text-background shadow-soft transition-all duration-300 hover:-translate-y-0.5"
+          className="hidden shrink-0 items-center gap-2 rounded-full bg-foreground px-5 py-2.5 text-sm font-semibold text-background shadow-soft transition-all duration-300 hover:-translate-y-0.5 md:inline-flex"
         >
           <span aria-hidden className="h-2 w-2 rotate-45 bg-brand-green" />
           WhatsApp

@@ -200,7 +200,7 @@ export function Hero3D() {
 
         {/* Layer 10: text content */}
         <div
-          className="relative mx-auto max-w-6xl px-6 pt-40 pb-24 md:pt-48 md:pb-32"
+          className="relative mx-auto max-w-6xl px-6 pt-32 pb-16 sm:pt-40 sm:pb-24 md:pt-48 md:pb-32"
           style={{ zIndex: 10 }}
         >
           <motion.div
@@ -214,12 +214,12 @@ export function Hero3D() {
               <span aria-hidden className="h-2 w-2 rotate-45 bg-brand-green" />
               Núcleo de Ensino
             </div>
-            <h1 className="mt-7 text-balance text-4xl md:text-6xl lg:text-7xl font-medium leading-[1.12] md:leading-[1.08] text-foreground">
+            <h1 className="mt-6 text-balance text-[clamp(2rem,8.2vw,2.85rem)] sm:text-4xl md:text-6xl lg:text-7xl font-medium leading-[1.14] sm:leading-[1.12] md:leading-[1.08] text-foreground">
               Educação, comunicação <br className="hidden sm:block" /> e{" "}
-              <span className="inline-block font-display text-brand-green">autonomia</span> para alunos que{" "}
-              <span className="inline-block font-display text-brand-purple">querem ir mais longe</span>.
+              <span className="font-display text-brand-green sm:inline-block">autonomia</span> para alunos que{" "}
+              <span className="font-display text-brand-purple sm:inline-block">querem ir mais longe</span>.
             </h1>
-            <p className="mx-auto mt-7 max-w-2xl text-pretty text-lg text-ink-muted/90">
+            <p className="mx-auto mt-5 max-w-2xl text-pretty text-base sm:text-lg text-ink-muted/90">
               Um núcleo de ensino com foco em pré-vestibular e redação — com aprovações em Medicina e
               vestibulares concorridos — para quem busca acompanhamento próximo, método e resultado real.
             </p>
