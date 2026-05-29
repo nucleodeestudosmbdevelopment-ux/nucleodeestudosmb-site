@@ -144,7 +144,7 @@ export function Hero3D() {
     window.addEventListener("touchstart", startIntro, passive);
     window.addEventListener("scroll", startIntro, passive);
     window.addEventListener("keydown", onKeyDown);
-    fallbackTimer = setTimeout(startIntro, 2000);
+    fallbackTimer = setTimeout(startIntro, 4500);
 
     return () => {
       clearTimeout(timer);
@@ -334,7 +334,7 @@ export function Hero3D() {
             transition={overlayFading ? {} : { duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
             className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
           >
-            <span className="text-[10px] uppercase tracking-[0.3em] text-white/50">role para começar</span>
+            <span className="text-[10px] uppercase tracking-[0.3em] text-white/50">role ou aguarde para começar</span>
             <motion.span
               animate={overlayFading ? {} : { y: [0, 7, 0] }}
               transition={overlayFading ? {} : { duration: 1.7, repeat: Infinity, ease: "easeInOut" }}
