@@ -86,6 +86,13 @@ module.exports = async function handler(req, res) {
 `.trimStart()
 );
 
+// package.json with type:module so Node.js treats server.js as ESM
+// (entry.cjs keeps its CJS semantics via the .cjs extension)
+writeFileSync(
+  resolve(funcDir, "package.json"),
+  JSON.stringify({ type: "module" }, null, 2)
+);
+
 // Function config — CJS entry wrapping the ESM server
 writeFileSync(
   resolve(funcDir, ".vc-config.json"),
