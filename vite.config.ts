@@ -4,7 +4,7 @@ import viteReact from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 import tsConfigPaths from "vite-tsconfig-paths";
 
-export default defineConfig({
+export default defineConfig(({ command }) => ({
   plugins: [
     tailwindcss(),
     tanstackStart({
@@ -13,7 +13,5 @@ export default defineConfig({
     viteReact(),
     tsConfigPaths(),
   ],
-  ssr: {
-    noExternal: true,
-  },
-});
+  ssr: command === "build" ? { noExternal: true } : undefined,
+}));

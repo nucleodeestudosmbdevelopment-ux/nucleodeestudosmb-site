@@ -126,6 +126,7 @@ export function Hero3D() {
     document.body.style.overflow = "hidden";
 
     let timer: ReturnType<typeof setTimeout>;
+    let fallbackTimer: ReturnType<typeof setTimeout>;
 
     const startIntro = () => {
       if (preHeroShownRef.current) return;
@@ -143,9 +144,11 @@ export function Hero3D() {
     window.addEventListener("touchstart", startIntro, passive);
     window.addEventListener("scroll", startIntro, passive);
     window.addEventListener("keydown", onKeyDown);
+    fallbackTimer = setTimeout(startIntro, 850);
 
     return () => {
       clearTimeout(timer);
+      clearTimeout(fallbackTimer);
       document.body.style.overflow = "";
       window.removeEventListener("wheel", startIntro);
       window.removeEventListener("touchstart", startIntro);
@@ -166,7 +169,7 @@ export function Hero3D() {
         style={{ zIndex: 10 }}
         initial={false}
         animate={{ opacity: started ? 1 : 0.94, scale: started ? 1 : 1.025 }}
-        transition={{ duration: 1.35, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ duration: 0.72, ease: [0.16, 1, 0.3, 1] }}
       >
         {/* Layer 0: atmospheric backdrop */}
         <OrganicBackdrop />
@@ -204,7 +207,7 @@ export function Hero3D() {
             style={{ x: tx, y: ty }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: started ? 1 : 0, y: started ? 0 : 20 }}
-            transition={{ duration: 0.95, ease: "easeOut", delay: started ? 1.05 : 0 }}
+            transition={{ duration: 0.62, ease: "easeOut", delay: started ? 0.22 : 0 }}
             className="text-center"
           >
             <div className="inline-flex items-center gap-2 rounded-full border border-black/6 bg-white/82 px-4 py-1.5 text-xs uppercase tracking-[0.22em] text-ink-muted shadow-[0_16px_30px_-24px_rgba(0,0,0,0.22)] backdrop-blur">
@@ -249,13 +252,13 @@ export function Hero3D() {
             background:
               "radial-gradient(ellipse at 15% 25%, oklch(0.74 0.22 152 / 0.18) 0%, transparent 45%), radial-gradient(ellipse at 85% 15%, oklch(0.65 0.26 295 / 0.16) 0%, transparent 42%), radial-gradient(ellipse at 50% 90%, oklch(0.70 0.20 152 / 0.10) 0%, transparent 40%), linear-gradient(135deg, oklch(0.18 0.06 280) 0%, oklch(0.13 0.03 250) 50%, oklch(0.15 0.05 200) 100%)",
             opacity: overlayFading ? 0 : 1,
-            transition: "opacity 1.35s cubic-bezier(0.16, 1, 0.3, 1)",
+            transition: "opacity 0.64s cubic-bezier(0.16, 1, 0.3, 1)",
           }}
         />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_46%,rgba(255,255,255,0.08)_0%,transparent_24%),linear-gradient(180deg,rgba(255,255,255,0.04)_0%,transparent_18%,transparent_82%,rgba(0,0,0,0.24)_100%)]"
           style={{
             opacity: overlayFading ? 0 : 1,
-            transition: "opacity 1.35s cubic-bezier(0.16, 1, 0.3, 1)",
+            transition: "opacity 0.64s cubic-bezier(0.16, 1, 0.3, 1)",
           }}
         />
 
@@ -264,7 +267,7 @@ export function Hero3D() {
           className="absolute inset-0 flex flex-col items-center justify-center"
           initial={{ opacity: 1 }}
           animate={{ opacity: overlayFading ? 0 : 1 }}
-          transition={{ duration: 1.05, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
           style={{ zIndex: 80 }}
         >
           <div className="pointer-events-auto absolute inset-x-0 top-0 px-4 pt-4">

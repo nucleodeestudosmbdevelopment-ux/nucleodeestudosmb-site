@@ -73,24 +73,29 @@ export function CommunicationSection() {
                   <PolyPizzaOpenBook reduced={reduced} />
                 </Scene>
               )}
-              <div className="absolute inset-0 pointer-events-none">
-                {floatingWords.map((w, i) => (
-                  <motion.span
-                    key={w}
-                    initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: false }}
-                    transition={{ duration: 0.6, delay: i * 0.15 }}
-                    animate={{ y: [0, i % 2 === 0 ? -6 : -3, 0] }}
-                    style={{
-                      position: "absolute",
-                      left: wordPositions[i]?.left ?? "50%",
-                      top: wordPositions[i]?.top ?? "50%",
-                    }}
-                    className={`rounded-full border border-white/10 bg-white/[0.05] px-3 py-1.5 text-sm font-medium tracking-[0.08em] text-white/78 backdrop-blur-sm md:text-base ${wordPositions[i]?.align === "right" ? "text-right" : "text-left"}`}
-                  >
-                    {w}
-                  </motion.span>
-                ))}
+              <div className="absolute inset-0 pointer-events-none hidden sm:block">
+                {floatingWords.map((w, i) => {
+                  const position = wordPositions[i];
+
+                  return (
+                    <motion.span
+                      key={w}
+                      initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: false }}
+                      transition={{ duration: 0.6, delay: i * 0.15 }}
+                      animate={{ y: [0, i % 2 === 0 ? -6 : -3, 0] }}
+                      style={{
+                        position: "absolute",
+                        left: position?.left ?? "50%",
+                        top: position?.top ?? "50%",
+                        transform: position?.align === "right" ? "translateX(-100%)" : undefined,
+                      }}
+                      className={`max-w-[42vw] rounded-full border border-white/30 bg-black/35 px-2.5 py-1 text-[11px] font-semibold tracking-[0.06em] text-white/96 backdrop-blur-sm sm:max-w-none sm:border-white/10 sm:bg-white/[0.05] sm:px-3 sm:py-1.5 sm:text-sm sm:font-medium sm:tracking-[0.08em] sm:text-white/78 md:text-base ${position?.align === "right" ? "text-right" : "text-left"}`}
+                    >
+                      {w}
+                    </motion.span>
+                  );
+                })}
               </div>
             </div>
 
