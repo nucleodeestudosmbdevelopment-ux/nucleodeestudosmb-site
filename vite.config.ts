@@ -8,10 +8,7 @@ export default defineConfig({
   plugins: [
     tailwindcss(),
     tanstackStart({
-      server: {
-        entry: "server",
-        preset: process.env.NITRO_PRESET,
-      },
+      server: { entry: "server" },
     }),
     viteReact(),
     tsConfigPaths(),
