@@ -3,6 +3,7 @@ import { Scene } from "./three/Scene";
 import { useFrame } from "@react-three/fiber";
 import { Center, useGLTF } from "@react-three/drei";
 import { useReducedMotion3D } from "@/hooks/useReducedMotion3D";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { contact } from "@/content/nmb";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Box3, MathUtils, type Group, Vector3 } from "three";
@@ -65,7 +66,7 @@ function FloatingSchoolModel({
   );
 }
 
-function SchoolCluster({ reduced }: { reduced: boolean }) {
+function SchoolCluster({ reduced, isMobile }: { reduced: boolean; isMobile: boolean }) {
   return (
     <>
       <FloatingSchoolModel
@@ -81,7 +82,7 @@ function SchoolCluster({ reduced }: { reduced: boolean }) {
         reduced={reduced}
         targetSize={2.65}
         baseRotation={[0.02, 1.18, 0.22]}
-        basePosition={[0.2, 2.42, -1.95]}
+        basePosition={isMobile ? [0.2, 3.1, -1.95] : [0.2, 2.42, -1.95]}
         motionOffset={1.8}
       />
       <FloatingSchoolModel
@@ -98,6 +99,7 @@ function SchoolCluster({ reduced }: { reduced: boolean }) {
 
 export function FinalCTA() {
   const reduced = useReducedMotion3D();
+  const isMobile = useIsMobile();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -109,7 +111,7 @@ export function FinalCTA() {
       <div className="absolute inset-0">
         {mounted && (
           <Scene className="absolute inset-0" camera={{ position: [0, -0.02, 11.1], fov: 35 }}>
-            <SchoolCluster reduced={reduced} />
+            <SchoolCluster reduced={reduced} isMobile={isMobile} />
           </Scene>
         )}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_24%,var(--background)_82%)]" />

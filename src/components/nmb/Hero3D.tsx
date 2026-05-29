@@ -332,9 +332,9 @@ export function Hero3D() {
           <motion.div
             animate={overlayFading ? {} : { opacity: [0.5, 1, 0.5] }}
             transition={overlayFading ? {} : { duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+            className="absolute bottom-10 left-1/2 w-[min(90vw,20rem)] -translate-x-1/2 flex flex-col items-center gap-2 px-4 text-center"
           >
-            <span className="text-[10px] uppercase tracking-[0.3em] text-white/50">role ou aguarde para começar</span>
+            <span className="block text-[10px] uppercase tracking-[0.3em] text-white/50">role ou aguarde para começar</span>
             <motion.span
               animate={overlayFading ? {} : { y: [0, 7, 0] }}
               transition={overlayFading ? {} : { duration: 1.7, repeat: Infinity, ease: "easeInOut" }}

@@ -7,9 +7,9 @@ export function Footer() {
   return (
     <footer className="relative border-t border-border bg-foreground text-background">
       <div className="mx-auto max-w-6xl px-6 py-16">
-        <div className="grid md:grid-cols-12 gap-10">
-          <div className="md:col-span-5">
-            <div>
+        <div className="grid gap-10 md:grid-cols-12">
+          <div className="flex flex-col items-center text-center md:col-span-5 md:items-start md:text-left">
+            <div className="flex justify-center md:justify-start">
               <img
                 src={BRAND_LOGO_WORDMARK_URL}
                 alt="Logo do Núcleo Márcia Baldi"
@@ -19,7 +19,7 @@ export function Footer() {
             <p className="mt-5 text-background/70 text-sm max-w-sm">
               Oratória, grupos de estudo, redação e preparação acadêmica.
             </p>
-            <div className="mt-6 flex flex-wrap gap-2">
+            <div className="mt-6 flex flex-wrap justify-center gap-2 md:justify-start">
               <a href={contact.instagram} target="_blank" rel="noreferrer"
                 className="rounded-full border border-white/15 px-4 py-2 text-xs hover:bg-white/10 transition-colors">
                 Instagram {contact.instagramHandle}
@@ -27,7 +27,7 @@ export function Footer() {
             </div>
           </div>
 
-          <div className="md:col-span-4 grid grid-cols-2 gap-6 text-sm">
+          <div className="grid grid-cols-2 gap-6 text-sm md:col-span-4">
             <div>
               <p className="text-background/50 text-xs uppercase tracking-[0.18em]">WhatsApp</p>
               <a href={contact.whatsapp} target="_blank" rel="noreferrer" className="mt-1 block hover:text-brand-green transition-colors">
@@ -53,7 +53,7 @@ export function Footer() {
             </div>
           </div>
 
-          <div className="md:col-span-3">
+          <div className="text-center md:col-span-3 md:text-left">
             <p className="font-display text-3xl leading-tight text-background/90">
               Educação, comunicação e autonomia.
             </p>
