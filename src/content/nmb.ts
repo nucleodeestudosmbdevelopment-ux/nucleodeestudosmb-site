@@ -49,8 +49,8 @@ export const pillars = [
     desc: "O aluno aprende a estudar melhor, organizar sua rotina e ganhar mais independência.",
     icon: "star",
     image:
-      "https://images.unsplash.com/photo-1529390079861-591de354faf5?auto=format&fit=crop&w=1200&q=80",
-    alt: "Estudante revisando anotações de forma autônoma em uma mesa de estudos.",
+      "https://images.unsplash.com/photo-1503676382389-4809596d5290?auto=format&fit=crop&w=1200&q=80",
+    alt: "Jovem estudante estudando de forma autônoma com cadernos e material de vestibular.",
   },
   {
     title: "Comunicação e expressão",
@@ -123,7 +123,14 @@ export const environmentGallery = [
 ];
 
 export const preVestibularHighlight = {
-  badge: "Pré-vestibular",
-  title: "Trilha estratégica para vestibulares concorridos",
-  desc: "Acompanhamento de redação, interpretação e rotina de simulados com foco em resultado e segurança no dia da prova.",
+  badge: "Pré-vestibular · Medicina",
+  title: "Referência em aprovações para Medicina",
+  desc: "Redação, interpretação, raciocínio lógico e rotina de estudos com acompanhamento próximo — metodologia que prepara para vestibulares de alta concorrência.",
 };
+
+export const preVestibularFeatures = [
+  { icon: "✦", label: "Redação dissertativa", desc: "Domínio de tese, argumentação e repertório para ENEM e vestibulares." },
+  { icon: "◐", label: "Interpretação de texto", desc: "Leitura crítica e resolução de questões de alto nível de exigência." },
+  { icon: "↗", label: "Rotina e método", desc: "Planejamento individualizado para manter constância e evolução real." },
+  { icon: "✷", label: "Aprovações em Medicina", desc: "Histórico de alunos aprovados em cursos de alta concorrência em BH." },
+];

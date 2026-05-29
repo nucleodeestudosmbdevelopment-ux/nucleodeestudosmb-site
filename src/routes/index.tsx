@@ -6,6 +6,7 @@ import { InsideNucleusSection } from "@/components/nmb/InsideNucleusSection";
 import { LearningEnvironmentSection } from "@/components/nmb/LearningEnvironmentSection";
 import { CommunicationSection } from "@/components/nmb/CommunicationSection";
 import { TestimonialsSection } from "@/components/nmb/TestimonialsSection";
+import { PreVestibularSection } from "@/components/nmb/PreVestibularSection";
 import { FinalCTA } from "@/components/nmb/FinalCTA";
 import { Footer } from "@/components/nmb/Footer";
 
@@ -42,6 +43,7 @@ function Index() {
       <LearningEnvironmentSection />
       <CommunicationSection />
       <TestimonialsSection />
+      <PreVestibularSection />
       <FinalCTA />
       <Footer />
     </main>

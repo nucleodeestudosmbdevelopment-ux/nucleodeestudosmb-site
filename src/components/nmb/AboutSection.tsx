@@ -37,7 +37,7 @@ export function AboutSection() {
             </p>
             <p>
               O foco não está apenas em ensinar matérias, mas em formar estudantes mais seguros,
-              organizados e preparados para seus objetivos acadêmicos.
+              organizados e preparados — incluindo para vestibulares de alta concorrência como Medicina.
             </p>
           </motion.div>
         </div>

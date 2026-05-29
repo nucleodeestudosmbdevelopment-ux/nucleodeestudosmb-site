@@ -217,8 +217,8 @@ export function Hero3D() {
               <span className="inline-block font-display text-brand-purple">querem ir mais longe</span>.
             </h1>
             <p className="mx-auto mt-7 max-w-2xl text-pretty text-lg text-ink-muted/90">
-              Um núcleo de ensino com acompanhamento próximo, metodologia personalizada e desenvolvimento
-              acadêmico para estudantes que buscam mais segurança, organização e resultado.
+              Um núcleo de ensino com foco em pré-vestibular e redação — com aprovações em Medicina e
+              vestibulares concorridos — para quem busca acompanhamento próximo, método e resultado real.
             </p>
             <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
               <a
