@@ -1,14 +1,14 @@
 // Centralized, editable content for the Núcleo Márcia Baldi site.
 
 export const contact = {
-  whatsapp: "https://wa.me/5531993443660",
+  whatsapp: import.meta.env.VITE_CONTACT_WHATSAPP as string,
   whatsappLabel: "Falar pelo WhatsApp",
-  phone: "(31) 99344-3660",
-  instagram: "https://instagram.com/nucleomarciabaldi",
-  instagramHandle: "@nucleomarciabaldi",
-  email: "nucleodeestudosmb@gmail.com",
-  address: "R. Fernandes Tourinho, 602 - Sala 601 - Funcionários, Belo Horizonte - MG, 30112-000",
-  hours: "Seg a Sex · 08:30 às 20:00 | Sáb · 09:00 às 13:00 | Dom · Fechado",
+  phone: import.meta.env.VITE_CONTACT_PHONE as string,
+  instagram: import.meta.env.VITE_CONTACT_INSTAGRAM as string,
+  instagramHandle: import.meta.env.VITE_CONTACT_INSTAGRAM_HANDLE as string,
+  email: import.meta.env.VITE_CONTACT_EMAIL as string,
+  address: import.meta.env.VITE_CONTACT_ADDRESS as string,
+  hours: import.meta.env.VITE_CONTACT_HOURS as string,
 };
 
 export const aboutCards = [
