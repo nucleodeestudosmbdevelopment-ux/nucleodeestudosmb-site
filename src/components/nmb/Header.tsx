@@ -1,18 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type MouseEvent } from "react";
+import { createPortal } from "react-dom";
 import { motion } from "framer-motion";
 import { Menu } from "lucide-react";
 import { contact } from "@/content/nmb";
 import { BRAND_LOGO_ICON_URL } from "@/lib/brand";
-import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
 
 const links = [
   { href: "#sobre", label: "Sobre" },
@@ -26,11 +17,28 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
+  const handleMenuToggle = (event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+    setMenuOpen((open) => !open);
+  };
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    const onOpenHeaderMenu = () => {
+      if (window.innerWidth < 768) {
+        setMenuOpen(true);
+      }
+    };
+
+    globalThis.addEventListener("nmb:open-header-menu", onOpenHeaderMenu);
+    return () => globalThis.removeEventListener("nmb:open-header-menu", onOpenHeaderMenu);
   }, []);
 
   return (
@@ -82,54 +90,59 @@ export function Header() {
           </div>
         </div>
 
-        <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
-          <SheetTrigger asChild>
-            <Button
-              variant="outline"
-              size="icon"
-              className={`ml-auto rounded-full border backdrop-blur-xl md:hidden ${
-                scrolled
-                  ? "border-black/8 bg-white/92 text-foreground shadow-card"
-                  : "border-white/35 bg-white/55 text-foreground"
-              }`}
-              aria-label="Abrir menu"
-            >
-              <Menu className="h-5 w-5" />
-            </Button>
-          </SheetTrigger>
+        <div className="relative z-[60] ml-auto md:hidden">
+          <button
+            type="button"
+            onClick={handleMenuToggle}
+            style={{ touchAction: "manipulation" }}
+            className={`inline-flex h-10 w-10 items-center justify-center rounded-full border backdrop-blur-xl ${
+              scrolled
+                ? "border-black/8 bg-white/92 text-foreground shadow-card"
+                : "border-white/35 bg-white/55 text-foreground"
+            }`}
+            aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
+          >
+            <Menu className="h-5 w-5" />
+          </button>
+        </div>
 
-          <SheetContent side="right" className="w-[88vw] border-l border-black/8 bg-surface p-6">
-            <SheetHeader className="text-left">
-              <SheetTitle className="text-foreground">Núcleo Márcia Baldi</SheetTitle>
-              <SheetDescription>Navegue pelas seções e fale conosco no WhatsApp.</SheetDescription>
-            </SheetHeader>
-
-            <nav className="mt-8 flex flex-col gap-2">
-              {links.map((link) => (
-                <SheetClose asChild key={link.href}>
+        {menuOpen &&
+          createPortal(
+            <>
+              <button
+                type="button"
+                aria-label="Fechar menu"
+                onClick={() => setMenuOpen(false)}
+                className="fixed inset-0 z-[55] md:hidden"
+              />
+              <div className="fixed right-4 top-[5.25rem] z-[60] w-[min(88vw,21rem)] md:hidden">
+                <div className="flex flex-col items-end gap-2">
+                  {links.map((link) => (
+                    <a
+                      key={link.href}
+                      href={link.href}
+                      onClick={() => setMenuOpen(false)}
+                      className="rounded-full border border-black/8 bg-white/90 px-4 py-2.5 text-[15px] font-medium text-foreground shadow-card backdrop-blur-xl"
+                    >
+                      {link.label}
+                    </a>
+                  ))}
                   <a
-                    href={link.href}
-                    className="rounded-xl border border-black/8 bg-white px-4 py-3 text-base font-medium text-foreground transition-colors hover:bg-muted"
+                    href={contact.whatsapp}
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={() => setMenuOpen(false)}
+                    className="inline-flex items-center gap-2 rounded-full bg-foreground px-4 py-2.5 font-semibold text-background shadow-soft"
                   >
-                    {link.label}
+                    <span aria-hidden className="h-2.5 w-2.5 rotate-45 bg-brand-green" />
+                    {" "}
+                    Falar pelo WhatsApp
                   </a>
-                </SheetClose>
-              ))}
-            </nav>
-
-            <div className="mt-6">
-              <a
-                href={contact.whatsapp}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-foreground px-5 py-3.5 text-sm font-semibold text-background shadow-soft"
-              >
-                <span aria-hidden className="h-2.5 w-2.5 rotate-45 bg-brand-green" />
-                Falar pelo WhatsApp
-              </a>
-            </div>
-          </SheetContent>
-        </Sheet>
+                </div>
+              </div>
+            </>,
+            document.body
+          )}
 
         <a
           href={contact.whatsapp}
@@ -138,6 +151,7 @@ export function Header() {
           className="hidden shrink-0 items-center gap-2 rounded-full bg-foreground px-5 py-2.5 text-sm font-semibold text-background shadow-soft transition-all duration-300 hover:-translate-y-0.5 md:inline-flex"
         >
           <span aria-hidden className="h-2 w-2 rotate-45 bg-brand-green" />
+          {" "}
           WhatsApp
         </a>
       </div>

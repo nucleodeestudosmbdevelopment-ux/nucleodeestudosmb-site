@@ -1,4 +1,5 @@
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { Menu } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { contact } from "@/content/nmb";
 import { BRAND_LOGO_ICON_URL } from "@/lib/brand";
@@ -68,6 +69,8 @@ export function Hero3D() {
   const [started, setStarted] = useState(false);
   const preHeroShownRef = useRef(false);
   const spotlightRef = useRef<HTMLDivElement>(null);
+  const transitionTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const fallbackTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
@@ -116,23 +119,36 @@ export function Hero3D() {
     };
   }, [mx, my, updateSpotlight]);
 
+  const startIntro = useCallback((openHeaderMenu = false) => {
+    if (preHeroShownRef.current) return;
+
+    preHeroShownRef.current = true;
+    setOverlayFading(true);
+
+    if (transitionTimerRef.current) clearTimeout(transitionTimerRef.current);
+    transitionTimerRef.current = setTimeout(() => {
+      setStarted(true);
+      if (openHeaderMenu) {
+        globalThis.dispatchEvent(new CustomEvent("nmb:open-header-menu"));
+      }
+    }, 240);
+  }, []);
+
   useEffect(() => {
     if (started) {
+      if (transitionTimerRef.current) clearTimeout(transitionTimerRef.current);
+      if (fallbackTimerRef.current) clearTimeout(fallbackTimerRef.current);
       document.body.style.overflow = "";
       return;
     }
 
-    // Bloqueia scroll da página enquanto a cortina está ativa
     document.body.style.overflow = "hidden";
 
-    let timer: ReturnType<typeof setTimeout>;
-    let fallbackTimer: ReturnType<typeof setTimeout>;
-
-    const startIntro = () => {
-      if (preHeroShownRef.current) return;
-      preHeroShownRef.current = true;
-      setOverlayFading(true);
-      timer = setTimeout(() => setStarted(true), 240);
+    const handleStartIntro = (event?: Event) => {
+      if (event?.target instanceof Element && event.target.closest("[data-curtain-menu-interactive]")) {
+        return;
+      }
+      startIntro();
     };
 
     const onKeyDown = (event: KeyboardEvent) => {
@@ -140,22 +156,22 @@ export function Hero3D() {
     };
 
     const passive = { passive: true } as AddEventListenerOptions;
-    window.addEventListener("wheel", startIntro, passive);
-    window.addEventListener("touchstart", startIntro, passive);
-    window.addEventListener("scroll", startIntro, passive);
+    window.addEventListener("wheel", handleStartIntro, passive);
+    window.addEventListener("touchstart", handleStartIntro, passive);
+    window.addEventListener("scroll", handleStartIntro, passive);
     window.addEventListener("keydown", onKeyDown);
-    fallbackTimer = setTimeout(startIntro, 4500);
+    fallbackTimerRef.current = setTimeout(() => startIntro(), 4500);
 
     return () => {
-      clearTimeout(timer);
-      clearTimeout(fallbackTimer);
+      if (transitionTimerRef.current) clearTimeout(transitionTimerRef.current);
+      if (fallbackTimerRef.current) clearTimeout(fallbackTimerRef.current);
       document.body.style.overflow = "";
-      window.removeEventListener("wheel", startIntro);
-      window.removeEventListener("touchstart", startIntro);
-      window.removeEventListener("scroll", startIntro);
+      window.removeEventListener("wheel", handleStartIntro);
+      window.removeEventListener("touchstart", handleStartIntro);
+      window.removeEventListener("scroll", handleStartIntro);
       window.removeEventListener("keydown", onKeyDown);
     };
-  }, [started]);
+  }, [started, startIntro]);
 
   return (
     <section
@@ -270,7 +286,7 @@ export function Hero3D() {
           transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
           style={{ zIndex: 80 }}
         >
-          <div className="pointer-events-auto absolute inset-x-0 top-0 px-4 pt-4">
+          <div className="pointer-events-auto absolute inset-x-0 top-0 px-4 pt-4" data-curtain-menu-interactive>
             <div className="mx-auto flex max-w-7xl items-center gap-3">
               <a
                 href="#top"
@@ -303,11 +319,26 @@ export function Hero3D() {
                 </div>
               </div>
 
+              <div className="ml-auto md:hidden">
+                <button
+                  type="button"
+                  aria-label="Abrir menu"
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    startIntro(true);
+                  }}
+                  data-curtain-menu-interactive
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/18 bg-white/12 text-white/90 backdrop-blur-xl"
+                >
+                  <Menu className="h-5 w-5" />
+                </button>
+              </div>
+
               <a
                 href={contact.whatsapp}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex shrink-0 items-center gap-2 rounded-full border border-white/18 bg-white/92 px-5 py-2.5 text-sm font-semibold text-slate-900 shadow-[0_18px_40px_-24px_rgba(0,0,0,0.45)] transition-all duration-300 hover:bg-white"
+                className="hidden shrink-0 items-center gap-2 rounded-full border border-white/18 bg-white/92 px-5 py-2.5 text-sm font-semibold text-slate-900 shadow-[0_18px_40px_-24px_rgba(0,0,0,0.45)] transition-all duration-300 hover:bg-white md:inline-flex"
               >
                 <span aria-hidden className="h-2 w-2 rotate-45 bg-brand-green" />
                 WhatsApp
